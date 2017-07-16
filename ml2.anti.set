@@ -1,0 +1,237 @@
+## Set file for ml2.ode on Wed Sep 16 14:02:05 2015
+6   Number of equations and auxiliaries
+20   Number of parameters
+# Numerical stuff
+1    nout
+40    nullcline mesh
+3   Runge-Kutta
+944.2  total
+0.05  DeltaT
+0  T0
+0  Transient
+100  Bound
+1e-12  DtMin
+1  DtMax
+0.001  Tolerance
+0.001  Abs. Tolerance
+0  Max Delay
+100   Eigenvector iterates
+0.001  Eigenvector tolerance
+0.001  Newton tolerance
+0  Poincare plane
+1e-05  Boundary value tolerance
+1e-05  Boundary value epsilon
+20   Boundary value iterates
+0   Poincare None
+1   Poincare variable
+1   Poincare sign
+0   Stop on Section
+0   Delay flag
+944.199999999689  Current time
+944.199999999689  Last Time
+1   MyStart
+1   INFLAG
+# Delays
+30.13889  
+.2285529  
+.765647  
+-30.23779  
+.007684601  
+0  
+# Bndry conds
+0
+0
+0
+0
+0
+0
+# Old ICs
+-29.20751653735646  V
+0.008673317765564761  W
+8.216804354195859e-12  S
+-31.86897  VP
+0.006205871  WP
+2.418907177739917e-08  SP
+# Ending  ICs
+-29.20224295255746  V
+0.008678452430752341  W
+8.238337524971515e-11  S
+-31.80266803837952  VP
+0.006262992019108965  WP
+2.191270487152188e-11  SP
+# Parameters
+1e-05  eps
+5  g
+-84  vk
+-60  vl
+120  vca
+8  gk
+2  gl
+4  gca
+20  c
+-1.2  v1
+18  v2
+120  vsyn
+20  vt
+2  vs
+1  alpha
+0.25  beta
+12  v3
+17.4  v4
+0.06666667  phi
+40  i
+# Graphics
+0.7071097251469876  rm
+-0.4999999999826661  rm
+0.4999958366025518  rm
+0.7071038372138506  rm
+0.5000041633974482  rm
+-0.4999999999826661  rm
+0  rm
+0.7071038372138506  rm
+0.7071097251469876  rm
+0    
+1    
+2    
+1    
+0    
+0    
+4    
+2    
+1    
+1    
+0    
+1    
+2    
+1    
+0    
+0    
+1    
+2    
+1    
+0    
+0    
+1    
+2    
+1    
+0    
+0    
+1    
+2    
+1    
+0    
+0    
+1    
+2    
+1    
+0    
+0    
+1    
+2    
+1    
+0    
+0    
+1    
+2    
+1    
+0    
+0    
+1    
+2    
+1    
+0    
+-1000   
+1000   
+0    
+0   3DFlag
+1   Timeflag
+0   Colorflag
+0   Type
+1  color scale
+0   minscale
+2000   xmax
+0   xmin
+30.1389045715332   ymax
+-47.57103729248047   ymin
+12   zmax
+-12   zmin
+1000   
+0.001   
+-8.716066360473633   
+0.02573673267572177   
+0   
+0.08333333333333333   
+45   Theta
+45   Phi
+0    xshft
+0    yshft
+0    zshft
+0   xlo
+-47.57103729248047   ylo
+0   
+-1   
+2000   xhi
+30.1389045715332   yhi
+20   
+1   
+# Transpose variables etc
+V
+2   n columns
+1   n rows
+1   row skip
+1   col skip
+1   row 0
+# Coupling stuff for H funs
+0
+0
+0
+0
+0
+0
+# Array plot stuff
+
+1   NCols
+0   Row 1
+50   NRows
+8   RowSkip
+0  Zmin
+1  Zmax
+# Torus information 
+0    Torus flag 1=ON
+6.283185307179586  Torus period
+# Range information
+eps
+-1   eq-range stab col
+0   shoot flag 1=on
+10   eq-range steps
+0  eq_range low
+1  eq_range high
+V
+V
+20   Range steps
+0   Cycle color 1=on
+1   Reset data 1=on
+1   Use old I.C.s 1=yes
+0  Par1 low
+0  Par2 low
+1  Par1 high
+1  Par2 high
+eps
+0   BVP side
+0   color cycle flag 1=on
+10   BVP range steps
+0  BVP range low
+1  BVP range high
+RHS etc ...
+dV/dT=(I+GL*(VL-V)+GK*W*(VK-V)+GCA*MINF(V)*(VCA-V)+G*EPS*SP*(VSYN-V))/C
+dW/dT=LAMW(V)*(WINF(V)-W)
+dS/dT=ALPHA*K(V)*(1-S)-BETA*S
+dVP/dT=(I+GL*(VL-VP)+GK*WP*(VK-VP)+GCA*MINF(VP)*(VCA-VP)+G*EPS*S*(VSYN-VP))/C
+dWP/dT=LAMW(VP)*(WINF(VP)-WP)
+dSP/dT=ALPHA*K(VP)*(1-SP)-BETA*SP
+
+User-defined functions:
+MINF(V) = .5*(1+TANH((V-V1)/V2))  
+WINF(V) = .5*(1+TANH((V-V3)/V4))  
+LAMW(V) = PHI*COSH((V-V3)/(2*V4))  
+K(V) = 1/(1+EXP(-(V-VT)/VS))  

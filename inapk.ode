@@ -1,0 +1,23 @@
+# from Izhikevich 2007 with synapse taken from 
+# http://www.math.pitt.edu/~bard/bardware/tut/newstyle.html#mlsyn
+
+v'=(i-gl*(V-el)-gna*minf(v)*(v-ena)-gk*n*(v-ek))/c
+n'=(ninf(v)-n)/taun(v)
+s'=alpha*k(v)*(1-s)-beta*s
+
+ninf(v) = 1/(1+exp((vn2-v)/kn))
+minf(v) = 1/(1+exp((vm2-v)/km))
+k(v)=1/(1+exp(-(v-vt)/vs))
+
+taun(v)=1
+
+p i=10
+# class 1 PRC i=10
+# class 2 PRC i=35
+p c=1,el=-80,gl=8,gna=20,gk=10
+p vm2=-20,km=15,vn2=-25,kn=5
+p ena=60,ek=-90
+p vsyn=120,vt=20,vs=2,alpha=1,beta=.25
+
+@ maxstor=10000000
+done

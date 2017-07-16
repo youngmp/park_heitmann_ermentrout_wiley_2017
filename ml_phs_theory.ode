@@ -1,0 +1,91 @@
+# run phase difference theory predictions for the two cases as a function of time.
+# for exc/inh coupling to identical neurons (C1 to C1 or C2 to C2), I use C1 iapp=42.5 and C2 iapp=88.5
+# for mixed coupling, I use C1 iapp=43.5 and C2 iapp=88.5
+# for mixed 12ii, use iapp2=88.9
+# 12ee theory/num agrees if eps=.001 (but not when eps=.0001?)
+# 12ei "" agrees if eps=.001 and eps=.0001 (but not when eps=.0025)
+# 12ie "" agrees if eps=.001
+# 12ii "" agrees if iapp2=88.9
+
+#table h1e c1e_hfun.tab
+#table h1i c1i_hfun.tab
+
+#table h2e c2e_hfun.tab
+#table h2i c2i_hfun.tab
+
+table h1e ml_mem1_hfun_exc_i43.5.tab
+table h1i ml_mem1_hfun_inh_i43.5.tab
+
+table h2e ml_mem2_hfun_exc.tab
+table h2i ml_mem2_hfun_inh.tab
+
+
+# TI ODEs
+# use 1-h1ee beacuse the tables can't take negative values. So include the periodicity artificially.
+h1ee'=eps*(h1e(per1*(1-h1ee))-h1e(per1*h1ee))/per1
+h1ei'=eps*(h1e(per1*(1-h1ei))-h1i(per1*h1ei))/per1
+h1ii'=eps*(h1i(per1*(1-h1ii))-h1i(per1*h1ii))/per1
+
+# TII ODEs
+h2ee'=eps*(h2e(per2*(1-h2ee))-h2e(per2*h2ee))/per2
+h2ei'=eps*(h2e(per2*(1-h2ei))-h2i(per2*h2ei))/per2
+h2ii'=eps*(h2i(per2*(1-h2ii))-h2i(per2*h2ii))/per2
+
+# TI/TII mixed
+h12ee'=-eps*(h1e(per3*(1-h12ee))-h2e(per3*h12ee))/per3
+h12ei'=-eps*(h1e(per3*(1-h12ei))-h2i(per3*h12ei))/per3
+h12ie'=-eps*(h1i(per3*(1-h12ie))-h2e(per3*h12ie))/per3
+h12ii'=-eps*(h1i(per3*(1-h12ii))-h2i(per3*h12ii))/per3
+
+# normalized RHS functions TI
+xx'=1
+aux rhs1ee=(h1e(per1*(1-xx))-h1e(per1*xx))/per1
+aux rhs1ei=(h1e(per1*(1-xx))-h1i(per1*xx))/per1
+aux rhs1ii=(h1i(per1*(1-xx))-h1i(per1*xx))/per1
+
+# normalized RHS functions TII
+aux rhs2ee=(h2e(per2*(1-xx))-h2e(per2*xx))/per2
+aux rhs2ei=(h2e(per2*(1-xx))-h2i(per2*xx))/per2
+aux rhs2ii=(h2i(per2*(1-xx))-h2i(per2*xx))/per2
+
+# normalized RHS functions mixed
+aux rhs12ee=(h2e(per3*(1-xx))-h1e(per3*xx))/per3
+aux rhs12ei=(h2i(per3*(1-xx))-h1e(per3*xx))/per3
+aux rhs12ie=(h2e(per3*(1-xx))-h1i(per3*xx))/per3
+aux rhs12ii=(h2i(per3*(1-xx))-h1i(per3*xx))/per3
+
+
+
+# quarter phase diff
+h1ee(0)=.25
+h1ei(0)=.25
+h1ii(0)=.25
+
+h2ee(0)=.25
+h2ei(0)=.25
+h2ii(0)=.25
+
+h12ee(0)=.25
+h12ei(0)=.25
+h12ie(0)=.25
+h12ii(0)=.25
+
+# TI, TII periods
+#p per1=132.25
+p per1=114.85
+
+p per2=114.55
+#p per2=109.1
+
+# average period
+p per3=114.7
+
+# default eps=.001
+p eps=1
+
+@ bounds=1000000,maxstor=10000000
+# rescale time: *.001
+# total 20kms
+@ dt=.01
+@ total=20
+done

@@ -1,0 +1,87 @@
+# from http://www.math.pitt.edu/~bard/bardware/tut/newstyle.html#mlsyn
+
+# Morris-Lecar reduced model 
+v'=(i+gl*(vl-v)+gk*w*(vk-v)+gca*minf(v)*(vca-v)+g*eps*sp*(vsyn-v))/c
+w'=lamw(v)*(winf(v)-w)
+s'=alpha*k(v)*(1-s)-beta*s
+
+vp'=(i+gl*(vl-vp)+gk*wp*(vk-vp)+gca*minf(vp)*(vca-vp) + g*eps*s*(vsyn-vp))/c 
+wp'=lamw(vp)*(winf(vp)-wp)
+sp'=alpha*k(vp)*(1-sp)-beta*sp
+
+minf(v)=.5*(1+tanh((v-v1)/v2))
+winf(v)=.5*(1+tanh((v-v3)/v4))
+lamw(v)=phi*cosh((v-v3)/(2*v4))
+k(v)=1/(1+exp(-(v-vt)/vs))
+
+
+param vk=-84,vl=-60,vca=120
+param gk=8,gl=2,c=20
+param v1=-1.2,v2=18
+param vt=20,vs=2,alpha=1,beta=.05
+param g=5
+
+p eps=.0025
+
+# parms that change per set
+# (default to TI (SNIC), exc)
+param vsyn=0,gca=4,v3=12,v4=17.4,phi=0.067,i=42.5
+# p=40 is closer to the snic, but
+# i=42.5 # sufficiently TI with compatible period to TII
+
+# parameter sets (TI/II, exc/inh)
+set ti_exc {i=42.5,v3=12,v4=17.4,gca=4,phi=.067,vsyn=0}
+set ti_inh {i=42.5,v3=12,v4=17.4,gca=4,phi=.067,vsyn=-75}
+set tii_exc {i=88.5,v3=2,v4=30,gca=4.4,phi=.04,vsyn=0}
+set tii_inh {i=88.5,v3=2,v4=30,gca=4.4,phi=.04,vsyn=-75}
+
+# TI membrane + TI PRC at bifurcation
+# start v,w,s at phase 0 (max v)
+# start vp,wp,sp at phase 1/4 (time 33.0625 of 132.25)
+# class 1 PRC with i=42.5
+
+#v(0)=30.48642
+#w(0)=.228588
+#s(0)=.8890991
+#vp(0)=-42.66515
+#wp(0)=.01201348
+#sp(0)=.2279906
+# phase estimation for TI,PRCI
+#table vdet ml_mem1_prc1_LCv.tab
+#table wdet ml_mem1_prc1_LCw.tab
+
+#dist1_[0..1888]=(v-vdet([j]))^2+(w-wdet([j]))^2
+#dist2_[0..1888]=(vp-vdet([j]))^2+(wp-wdet([j]))^2
+#special mn1=findext(-1,1889,1,dist1_0)
+#special mn2=findext(-1,1889,1,dist2_0)
+#aux psi=mod(mn2(3)/1888-mn1(3)/1888.2+.5,1)-.5
+
+# TII membrane + TII PRC at bifurcation
+# start v,w,s at phase 0 (max v)
+# start vp,wp,sp at phase 1/4 (28.6375 of 114.55)
+# cass 2 PRC with i=88.5
+v(0)=28.75165
+w(0)=.3309653
+s(0)=.9201432
+vp(0)=-52.09383
+wp(0)=.2830268
+sp(0)=.3245806
+
+## phase estimation for TII, PRCII
+#table vdet ml_mem2_prc2_LCv.tab
+#table wdet ml_mem2_prc2_LCw.tab
+
+# phase estimation
+#dist1_[0..1022]=(v-vdet([j]))^2+(w-wdet([j]))^2
+#dist2_[0..1022]=(vp-vdet([j]))^2+(wp-wdet([j]))^2
+#special mn1=findext(-1,1023,1,dist1_0)
+#special mn2=findext(-1,1023,1,dist2_0)
+#aux psi=mod(mn2(3)/1022-mn1(3)/1022+.5,1)-.5
+
+#aux p1=mn1(3)
+#aux p2=mn2(3)
+
+#wz
+@ total=20000
+@ maxstor=10000000
+done
